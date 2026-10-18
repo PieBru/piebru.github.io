@@ -73,6 +73,7 @@ body {
 
 /* ---------- Header ---------- */
 header { padding: clamp(56px, 12vh, 110px) 0 8px; text-align: center; }
+.portrait-link { display: block; width: fit-content; margin: 0 auto; cursor: zoom-in; border-radius: 50%; }
 .portrait {
   display: block;
   width: clamp(96px, 18vw, 124px);
@@ -82,6 +83,24 @@ header { padding: clamp(56px, 12vh, 110px) 0 8px; text-align: center; }
   object-fit: cover;
   border: 1px solid var(--border);
   box-shadow: 0 0 0 4px var(--accent-bg), var(--shadow);
+}
+
+/* ---------- Full-size portrait lightbox (pure CSS, :target) ---------- */
+.lightbox {
+  position: fixed; inset: 0; z-index: 100;
+  display: none;
+  align-items: center; justify-content: center;
+  background: rgba(10, 12, 16, 0.88);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  cursor: zoom-out;
+}
+.lightbox:target { display: flex; }
+.lightbox img {
+  max-width: min(92vw, 92vh);
+  max-height: min(92vw, 92vh);
+  border-radius: var(--radius);
+  box-shadow: 0 20px 80px rgba(0,0,0,0.5);
 }
 header h1 {
   margin: 0;
@@ -185,7 +204,9 @@ footer .sep { opacity: .5; margin: 0 8px; }
 <body>
 
 <header class="wrap">
-  <img class="portrait" src="assets/portrait.jpg" alt="Illustrated portrait of Piero" width="360" height="360">
+  <a class="portrait-link" href="#portrait-full" title="View full size" aria-label="View portrait in full size">
+    <img class="portrait" src="assets/portrait.jpg" alt="Illustrated portrait of Piero" width="360" height="360">
+  </a>
   <h1>PieBru</h1>
   <p>A quiet corner of the web — small projects and focused interests.</p>
 </header>
@@ -228,6 +249,11 @@ footer .sep { opacity: .5; margin: 0 8px; }
     <a href="https://github.com/PieBru" style="color:inherit">github.com/PieBru</a>
   </div>
 </footer>
+
+<!-- Full-size portrait overlay: opens via #portrait-full, click anywhere to close -->
+<a id="portrait-full" class="lightbox" href="#" aria-label="Close full-size portrait">
+  <img src="assets/portrait-full.jpg" alt="Illustrated portrait of Piero — full size" width="1024" height="1024" loading="lazy">
+</a>
 
 </body>
 </html>
