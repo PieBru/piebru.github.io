@@ -73,6 +73,16 @@ body {
 
 /* ---------- Header ---------- */
 header { padding: clamp(56px, 12vh, 110px) 0 8px; text-align: center; }
+.portrait {
+  display: block;
+  width: clamp(96px, 18vw, 124px);
+  height: clamp(96px, 18vw, 124px);
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--border);
+  box-shadow: 0 0 0 4px var(--accent-bg), var(--shadow);
+}
 header h1 {
   margin: 0;
   font-size: clamp(34px, 7vw, 52px);
@@ -175,6 +185,7 @@ footer .sep { opacity: .5; margin: 0 8px; }
 <body>
 
 <header class="wrap">
+  <img class="portrait" src="assets/portrait.jpg" alt="Illustrated portrait of Piero" width="360" height="360">
   <h1>PieBru</h1>
   <p>A quiet corner of the web — small projects and focused interests.</p>
 </header>
