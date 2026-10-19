@@ -111,7 +111,7 @@ header h1 {
 }
 header p {
   margin: 12px auto 0;
-  max-width: 460px;
+  max-width: none; /* full wrap width: keeps the subtitle on one line on large screens */
   color: var(--fg-soft);
   font-size: clamp(15.5px, 2.2vw, 17.5px);
 }
@@ -213,6 +213,19 @@ footer .sep { opacity: .5; margin: 0 8px; }
 
 <main class="wrap">
 
+  <!-- ============ Category: Games ============ -->
+  <section class="category games" aria-labelledby="cat-games">
+    <h2 id="cat-games">Games</h2>
+    <ul>
+      <li>
+        <a class="card" href="/games/">
+          <span class="title">Single-file browser games <span class="badge">22 games</span> <span class="arrow" aria-hidden="true">→</span></span>
+          <p class="desc">A collection of self-contained HTML+CSS+JS games, playable in any recent web browser — developed to probe the qualities of the LLM I create, and for the fun and growth of my grandnephews.</p>
+        </a>
+      </li>
+    </ul>
+  </section>
+
   <!-- ============ Category: Health ============
        To add a page: duplicate one <li> below and set href/title/desc. -->
   <section class="category health" aria-labelledby="cat-health">
@@ -222,19 +235,6 @@ footer .sep { opacity: .5; margin: 0 8px; }
         <a class="card" href="/monotropism/">
           <span class="title">Monotropism <span class="arrow" aria-hidden="true">→</span></span>
           <p class="desc">An interest-based account of autism — research drafts and neuroaffirming guides in several languages.</p>
-        </a>
-      </li>
-    </ul>
-  </section>
-
-  <!-- ============ Category: Games ============ -->
-  <section class="category games" aria-labelledby="cat-games">
-    <h2 id="cat-games">Games</h2>
-    <ul>
-      <li>
-        <a class="card" href="/games/">
-          <span class="title">Single-file browser games <span class="badge">22 games</span> <span class="arrow" aria-hidden="true">→</span></span>
-          <p class="desc">A collection of self-contained HTML+CSS+JS games, playable in any recent web browser — developed to probe the qualities of the LLM I create, and for the fun and growth of my grandnephews.</p>
         </a>
       </li>
     </ul>
