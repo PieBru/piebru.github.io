@@ -37,6 +37,7 @@
   /* Category accents */
   --cat-health: #1f9c86;
   --cat-games:  #6d4fc4;
+  --cat-ai:     #c96f1f;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -53,6 +54,7 @@
 
     --cat-health: #5ec9b6;
     --cat-games:  #a78bfa;
+    --cat-ai:     #e8a04c;
   }
 }
 
@@ -131,6 +133,7 @@ main { padding: clamp(36px, 7vh, 64px) 0 24px; }
 .category { --cat: var(--accent); }
 .category.health { --cat: var(--cat-health); }
 .category.games  { --cat: var(--cat-games);  }
+.category.ai     { --cat: var(--cat-ai);     }
 
 .category ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
 
@@ -236,6 +239,19 @@ footer .sep { opacity: .5; margin: 0 8px; }
           <span class="title">Monotropism <span class="arrow" aria-hidden="true">→</span></span>
           <p class="desc">An interest-based account of autism — research drafts and neuroaffirming guides in several languages.</p>
         </a>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ============ Category: AI Lab ============ -->
+  <section class="category ai" aria-labelledby="cat-ai">
+    <h2 id="cat-ai">AI Lab experiments (public)</h2>
+    <ul>
+      <li>
+        <div class="card placeholder" aria-disabled="true">
+          <span class="title">Experiments <span class="badge">Coming soon</span></span>
+          <p class="desc">The public subset of the lab: prototype LLMs, evaluation benchmarks and interactive demos built with my own coding models.</p>
+        </div>
       </li>
     </ul>
   </section>
