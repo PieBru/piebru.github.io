@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Educative Games — PieBru</title>
+<meta name="description" content="Grandpa Piero's educative games — chess, sudoku and more to come. Each game ships with historical references, strategy guides and learning materials.">
+<meta name="author" content="PieBru">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>">
+
+<style>
+/* ============================================================
+   piebru.github.io/educative — educative games index
+   Same design language as /games/, but articulated: each game is
+   a section with documentation (history, strategy, learning).
+   To add a game: copy one <article class="game"> block below.
+   To add a document: add one <li> to the matching .docgroup.
+   ============================================================ */
+
+:root {
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif;
+  --maxw: 1080px;
+  --radius: 14px;
+  --bg:        #f6f7f9;
+  --fg:        #1a1d24;
+  --fg-soft:   #4c5363;
+  --fg-faint:  #838b9a;
+  --surface:   #ffffff;
+  --border:    #e4e8ee;
+  --accent:    #2f5fae;
+  --accent-bg: rgba(47,95,174,0.09);
+  --edu:       #2e7d5b;
+  --edu-bg:    rgba(46,125,91,0.08);
+  --shadow:    0 1px 6px rgba(20,30,55,0.06);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:        #0d0f13;
+    --fg:        #e9ebf0;
+    --fg-soft:   #aeb4c0;
+    --fg-faint:  #767d8c;
+    --surface:   #14171e;
+    --border:    #232833;
+    --accent:    #8aa6ff;
+    --accent-bg: rgba(138,166,255,0.12);
+    --edu:       #6fd0a8;
+    --edu-bg:    rgba(111,208,168,0.10);
+    --shadow:    0 2px 10px rgba(0,0,0,0.35);
+  }
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--fg);
+  font-family: var(--font-sans); font-size: 16px; line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+.wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 22px; }
+
+header { padding: 40px 0 4px; text-align: center; }
+.back { display: inline-block; font-size: 13.5px; color: var(--fg-soft); text-decoration: none; margin-bottom: 14px; }
+.back:hover { color: var(--accent); }
+h1 { font-size: clamp(26px, 5vw, 34px); letter-spacing: -0.02em; margin: 0 0 8px; }
+.subtitle { color: var(--fg-soft); font-size: 15px; max-width: 680px; margin: 0 auto; }
+.subtitle b { color: var(--fg); }
+
+/* ---- per-game article ---- */
+.game {
+  margin: 28px 0 8px; padding: 22px 22px 18px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-left: 4px solid var(--edu);
+  border-radius: var(--radius); box-shadow: var(--shadow);
+}
+.game-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 14px; }
+.game h2 { margin: 0; font-size: 21px; letter-spacing: -0.01em; }
+.game h2 a { color: var(--fg); text-decoration: none; }
+.game h2 a:hover { color: var(--edu); }
+.badge {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--edu); background: var(--edu-bg);
+  border: 1px solid color-mix(in srgb, var(--edu) 35%, transparent);
+  padding: 3px 10px; border-radius: 999px; white-space: nowrap;
+}
+.play {
+  margin-left: auto; font-size: 13.5px; font-weight: 600; text-decoration: none;
+  color: var(--edu); border: 1.5px solid var(--edu); border-radius: 999px;
+  padding: 5px 16px; white-space: nowrap; transition: background 0.15s ease, color 0.15s ease;
+}
+.play:hover { background: var(--edu); color: var(--bg); }
+
+.game-body { display: flex; flex-wrap: wrap; gap: 22px; margin-top: 16px; }
+.shot { flex: 0 0 252px; }
+.shot img { display: block; width: 252px; height: 157px; object-fit: contain; /* letterboxed, never cropped */
+  border-radius: 10px; border: 1px solid var(--border); background: #262a33; }
+.shot figcaption { font-size: 11.5px; color: var(--fg-faint); margin-top: 6px; text-align: center; }
+
+.blurb { flex: 1 1 320px; min-width: 260px; font-size: 14px; color: var(--fg-soft); }
+.blurb p { margin: 0 0 10px; }
+.srcline { font-size: 12.5px; }
+.srcline a { color: var(--accent); text-decoration: none; }
+.srcline a:hover { text-decoration: underline; }
+
+/* ---- documentation groups ---- */
+.docgroups { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px 26px;
+  margin-top: 16px; padding-top: 14px; border-top: 1px dashed var(--border); }
+.docgroup h3 { margin: 0 0 6px; font-size: 11.5px; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--edu); }
+.docgroup ul { margin: 0; padding: 0; list-style: none; font-size: 13.5px; }
+.docgroup li { margin: 4px 0; color: var(--fg-soft); }
+.docgroup a { color: var(--fg); text-decoration: none; border-bottom: 1px solid color-mix(in srgb, var(--edu) 40%, transparent); }
+.docgroup a:hover { color: var(--edu); }
+.docgroup .lang { font-size: 10.5px; color: var(--fg-faint); font-weight: 600; margin-left: 4px; }
+.docgroup .todo { color: var(--fg-faint); font-style: italic; }
+
+.footnote { font-size: 13px; color: var(--fg-faint); margin: 18px 4px 0; }
+.footnote b { color: var(--fg-soft); font-weight: 600; }
+
+footer { border-top: 1px solid var(--border); margin-top: 34px; padding: 22px 0 42px;
+  text-align: center; font-size: 12.5px; color: var(--fg-faint); }
+footer a { color: var(--fg-soft); }
+</style>
+</head>
+<body>
+
+<header class="wrap">
+  <a class="back" href="/">← Back to PieBru</a>
+  <h1>Educative Games</h1>
+  <p class="subtitle">Classic games that train the mind. Each entry is playable straight from its public
+  repository and grows its own library — <b>historical references, strategy guides and learning materials</b> —
+  as Grandpa Piero writes them.</p>
+</header>
+
+<main class="wrap">
+
+  <!-- ============ Chess ============ -->
+  <article class="game" aria-labelledby="g-chess">
+    <div class="game-head">
+      <h2 id="g-chess"><a href="https://piebru.github.io/AI-Chess/chess.html" target="_blank" rel="noopener">Chess</a></h2>
+      <span class="badge">Human vs AI · LLM opponents</span>
+      <a class="play" href="https://piebru.github.io/AI-Chess/chess.html" target="_blank" rel="noopener">Play →</a>
+    </div>
+    <div class="game-body">
+      <figure class="shot" style="margin:0;">
+        <img src="/assets/educative/chess.jpg" alt="Piero's AI Chess board — a live game against the browser engine" loading="lazy" width="252" height="157">
+        <figcaption>Piero's AI Chess, 2026 Edition</figcaption>
+      </figure>
+      <div class="blurb">
+        <p>A full chess game in a single HTML file: play as Human against a hand-built browser engine
+        (six difficulty levels), the Stockfish engine, or an LLM opponent — on either side.
+        Optional spoken narration and AI hints + commentary make it a study partner, not just a game.</p>
+        <p class="srcline">Source &amp; docs: <a href="https://github.com/PieBru/AI-Chess" target="_blank" rel="noopener">github.com/PieBru/AI-Chess</a></p>
+      </div>
+    </div>
+    <div class="docgroups">
+      <div class="docgroup">
+        <h3>History &amp; background</h3>
+        <ul>
+          <li><a href="https://piebru.github.io/AI-Chess/docs/onefile-chess-blog.html" target="_blank" rel="noopener">A whole engine lab in a single file</a><span class="lang">EN</span></li>
+          <li><a href="https://piebru.github.io/AI-Chess/docs/onefile-chess-blog_it.html" target="_blank" rel="noopener">Un laboratorio di engine in un solo file</a><span class="lang">IT</span></li>
+          <li class="todo">More history coming soon</li>
+        </ul>
+      </div>
+      <div class="docgroup">
+        <h3>Strategy &amp; learning</h3>
+        <ul>
+          <li><a href="https://piebru.github.io/AI-Chess/docs/onefile-chess-guide.html" target="_blank" rel="noopener">Player's Guide</a><span class="lang">EN</span></li>
+          <li><a href="https://piebru.github.io/AI-Chess/docs/onefile-chess-guide_it.html" target="_blank" rel="noopener">Guida del giocatore</a><span class="lang">IT</span></li>
+          <li><a href="https://piebru.github.io/AI-Chess/docs/onefile-chess-kids.html" target="_blank" rel="noopener">Your Chess Adventure!</a> <span class="lang">EN · for kids</span></li>
+          <li><a href="https://piebru.github.io/AI-Chess/docs/onefile-chess-kids_it.html" target="_blank" rel="noopener">La tua avventura a scacchi!</a> <span class="lang">IT · per bambini</span></li>
+        </ul>
+      </div>
+      <div class="docgroup">
+        <h3>Under the hood</h3>
+        <ul>
+          <li><a href="https://piebru.github.io/AI-Chess/docs/ARCHITECTURE.md" target="_blank" rel="noopener">Architecture notes</a></li>
+          <li class="todo">Engine deep-dive coming soon</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- ============ Sudoku ============ -->
+  <article class="game" aria-labelledby="g-sudoku">
+    <div class="game-head">
+      <h2 id="g-sudoku"><a href="https://piebru.github.io/Sudoku4all/sudoku.html" target="_blank" rel="noopener">Sudoku</a></h2>
+      <span class="badge">6 difficulty levels · lessons included</span>
+      <a class="play" href="https://piebru.github.io/Sudoku4all/sudoku.html" target="_blank" rel="noopener">Play →</a>
+    </div>
+    <div class="game-body">
+      <figure class="shot" style="margin:0;">
+        <img src="/assets/educative/sudoku.jpg" alt="Sudoku grid, Medium puzzle in progress with a number picker" loading="lazy" width="252" height="157">
+        <figcaption>Sudoku4all — Medium puzzle</figcaption>
+      </figure>
+      <div class="blurb">
+        <p>A clean, distraction-free sudoku with six difficulty levels — from a gentle
+        <em>First steps</em> to <em>Extreme</em> — a built-in timer, mistake counter and hints.
+        The lessons walk a complete beginner from the rules to advanced solving techniques.</p>
+        <p class="srcline">Source &amp; docs: <a href="https://github.com/PieBru/Sudoku4all" target="_blank" rel="noopener">github.com/PieBru/Sudoku4all</a></p>
+      </div>
+    </div>
+    <div class="docgroups">
+      <div class="docgroup">
+        <h3>History &amp; background</h3>
+        <ul>
+          <li class="todo">The story of sudoku — coming soon</li>
+        </ul>
+      </div>
+      <div class="docgroup">
+        <h3>Strategy &amp; learning</h3>
+        <ul>
+          <li><a href="https://piebru.github.io/Sudoku4all/lessons/" target="_blank" rel="noopener">Learn Sudoku — 6 chapters</a></li>
+          <li class="todo">Technique glossary coming soon</li>
+        </ul>
+      </div>
+      <div class="docgroup">
+        <h3>Under the hood</h3>
+        <ul>
+          <li class="todo">Generator &amp; solver notes coming soon</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <p class="footnote"><b>More games coming</b> — the collection grows as Grandpa Piero finishes them.
+  Every game runs entirely in your browser from its public repository: no accounts, no downloads, no tracking.</p>
+</main>
+
+<footer class="wrap">
+  <a href="/">← Back to PieBru</a>
+</footer>
+
+</body>
+</html>
