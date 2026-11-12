@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Games — Demo takes — PieBru</title>
+<meta name="description" content="Grandpa Piero's collection of single-file browser games — early demo takes of his single-file browser games — built one-shot with his own coding LLM.">
+<meta name="author" content="PieBru">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕹️</text></svg>">
+
+<style>
+/* ============================================================
+   piebru.github.io/games — tabular games index
+   Same design language as the hub: no JS, no deps, no cookies.
+   To add a game: copy one <tr> block below.
+   ============================================================ */
+
+:root {
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif;
+  --maxw: 1080px;
+  --radius: 14px;
+  --bg:        #f6f7f9;
+  --fg:        #1a1d24;
+  --fg-soft:   #4c5363;
+  --fg-faint:  #838b9a;
+  --surface:   #ffffff;
+  --border:    #e4e8ee;
+  --accent:    #2f5fae;
+  --accent-bg: rgba(47,95,174,0.09);
+  --games:     #6d4fc4;
+  --games-bg:  rgba(109,79,196,0.08);
+  --shadow:    0 1px 6px rgba(20,30,55,0.06);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:        #0d0f13;
+    --fg:        #e9ebf0;
+    --fg-soft:   #aeb4c0;
+    --fg-faint:  #767d8c;
+    --surface:   #14171e;
+    --border:    #232833;
+    --accent:    #8aa6ff;
+    --accent-bg: rgba(138,166,255,0.12);
+    --games:     #a78bfa;
+    --games-bg:  rgba(167,139,250,0.10);
+    --shadow:    0 2px 10px rgba(0,0,0,0.35);
+  }
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--fg);
+  font-family: var(--font-sans); font-size: 16px; line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+.wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 22px; }
+
+header { padding: 40px 0 4px; text-align: center; }
+.back { display: inline-block; font-size: 13.5px; color: var(--fg-soft); text-decoration: none; margin-bottom: 14px; }
+.back:hover { color: var(--accent); }
+h1 { font-size: clamp(26px, 5vw, 34px); letter-spacing: -0.02em; margin: 0 0 8px; }
+.subtitle { color: var(--fg-soft); font-size: 15px; max-width: 640px; margin: 0 auto; }
+
+.tablewrap {
+  margin: 28px 0 8px; padding: 6px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); box-shadow: var(--shadow);
+  overflow-x: auto;
+}
+table { width: 100%; border-collapse: collapse; min-width: 720px; }
+caption { text-align: left; padding: 12px 14px 10px; font-size: 12.5px; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--games); }
+th[scope="col"] { text-align: left; font-size: 11.5px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--fg-faint); font-weight: 600; padding: 8px 14px; border-bottom: 1px solid var(--border); }
+tbody th, tbody td { padding: 12px 14px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+tbody tr:last-child th, tbody tr:last-child td { border-bottom: none; }
+tbody tr { transition: background 0.15s ease; }
+tbody tr:hover { background: var(--games-bg); }
+
+tbody th[scope="row"] { font-weight: 500; }
+.game-link { color: var(--fg); font-weight: 600; text-decoration: none; }
+.game-link:hover { color: var(--games); }
+.game-link .arrow { opacity: 0; transition: opacity 0.15s ease; }
+.game-link:hover .arrow { opacity: 1; }
+.meta { display: block; margin-top: 3px; font-size: 12px; color: var(--fg-faint); font-weight: 400; }
+.meta code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 11px; }
+
+.shot-cell { width: 168px; }
+.shot-cell img { display: block; width: 160px; height: 100px; object-fit: contain; /* full picture, letterboxed — never cropped */
+  border-radius: 8px; border: 1px solid var(--border); background: #262a33; }
+
+.prompt-cell { font-size: 13px; color: var(--fg-soft); max-width: 190px; }
+.prompt-cell .noprompt { color: var(--fg-faint); font-style: italic; }
+.prompt-cell a { color: var(--accent); text-decoration: none; }
+.prompt-cell a:hover { text-decoration: underline; }
+.notes-cell { font-size: 13.5px; color: var(--fg-soft); max-width: 210px; }
+
+.footnote { font-size: 13px; color: var(--fg-faint); margin: 14px 4px 0; }
+.footnote b { color: var(--fg-soft); font-weight: 600; }
+
+footer { border-top: 1px solid var(--border); margin-top: 34px; padding: 22px 0 42px;
+  text-align: center; font-size: 12.5px; color: var(--fg-faint); }
+footer a { color: var(--fg-soft); }
+</style>
+</head>
+<body>
+
+<header class="wrap">
+  <a class="back" href="/games/">← Back to all games</a>
+  <h1>Games — Demo takes</h1>
+  <p class="subtitle">Early demo takes — first playable versions that later grew into the games on the
+  main <a href="/games/">games page</a>.</p>
+</header>
+
+<main class="wrap">
+  <div class="tablewrap">
+    <table>
+      <caption>8 demo takes · part of the collection</caption>
+      <thead>
+        <tr>
+          <th scope="col">Game</th>
+          <th scope="col">Screenshot</th>
+          <th scope="col">Prompt</th>
+          <th scope="col">Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <th scope="row">
+          <a class="game-link" href="https://piebru.github.io/Grandpa-Piero-Games/games/260616%20-%203D%20Browser%20Racer.html" target="_blank" rel="noopener">3D Browser Racer DEMO <span class="arrow" aria-hidden="true">→</span></a>
+          <span class="meta">260616 · <code>260616 - 3D Browser Racer.html</code></span>
+        </th>
+        <td class="shot-cell"><a href="https://piebru.github.io/Grandpa-Piero-Games/games/260616%20-%203D%20Browser%20Racer.html" target="_blank" rel="noopener" tabindex="-1" aria-label="Play 3D Browser Racer DEMO"><img src="/assets/games/260616-3D_Browser_Racer.jpg" alt="Screenshot of 3D Browser Racer DEMO" width="160" height="100" loading="lazy"></a></td>
+        <td class="prompt-cell"><span class="noprompt">one-shot · prompt not archived</span></td>
+        <td class="notes-cell">3D racing in the browser</td>
+      </tr>
+      <tr>
+        <th scope="row">
+          <a class="game-link" href="https://piebru.github.io/Grandpa-Piero-Games/games/260616%20-%20Infinite%20Minecraft%20World.html" target="_blank" rel="noopener">Infinite Minecraft World DEMO <span class="arrow" aria-hidden="true">→</span></a>
+          <span class="meta">260616 · <code>260616 - Infinite Minecraft World.html</code></span>
+        </th>
+        <td class="shot-cell"><a href="https://piebru.github.io/Grandpa-Piero-Games/games/260616%20-%20Infinite%20Minecraft%20World.html" target="_blank" rel="noopener" tabindex="-1" aria-label="Play Infinite Minecraft World DEMO"><img src="/assets/games/260616-Infinite_Minecraft_World.jpg" alt="Screenshot of Infinite Minecraft World DEMO" width="160" height="100" loading="lazy"></a></td>
+        <td class="prompt-cell"><span class="noprompt">one-shot · prompt not archived</span></td>
+        <td class="notes-cell">Endless voxel sandbox</td>
+      </tr>
+      <tr>
+        <th scope="row">
+          <a class="game-link" href="https://piebru.github.io/Grandpa-Piero-Games/games/260620a%20-%204-Way%20Traffic%20Intersection%20Simulator.html" target="_blank" rel="noopener">4-Way Traffic Intersection Simulator DEMO <span class="arrow" aria-hidden="true">→</span></a>
+          <span class="meta">260620a · <code>260620a - 4-Way Traffic Intersection Simulator.html</code></span>
+        </th>
+        <td class="shot-cell"><a href="https://piebru.github.io/Grandpa-Piero-Games/games/260620a%20-%204-Way%20Traffic%20Intersection%20Simulator.html" target="_blank" rel="noopener" tabindex="-1" aria-label="Play 4-Way Traffic Intersection Simulator DEMO"><img src="/assets/games/260620a-4-Way_Traffic_Intersection_Simulator.jpg" alt="Screenshot of 4-Way Traffic Intersection Simulator DEMO" width="160" height="100" loading="lazy"></a></td>
+        <td class="prompt-cell"><span class="noprompt">one-shot · prompt not archived</span></td>
+        <td class="notes-cell">Run a</td>
+      </tr>
+      <tr>
+        <th scope="row">
+          <a class="game-link" href="https://piebru.github.io/Grandpa-Piero-Games/games/260620b%20-%204-Way%20Traffic%20Intersection%20Simulator.html" target="_blank" rel="noopener">4-Way Traffic Intersection Simulator DEMO <span class="arrow" aria-hidden="true">→</span></a>
+          <span class="meta">260620b · <code>260620b - 4-Way Traffic Intersection Simulator.html</code></span>
+        </th>
+        <td class="shot-cell"><a href="https://piebru.github.io/Grandpa-Piero-Games/games/260620b%20-%204-Way%20Traffic%20Intersection%20Simulator.html" target="_blank" rel="noopener" tabindex="-1" aria-label="Play 4-Way Traffic Intersection Simulator DEMO"><img src="/assets/games/260620b-4-Way_Traffic_Intersection_Simulator.jpg" alt="Screenshot of 4-Way Traffic Intersection Simulator DEMO" width="160" height="100" loading="lazy"></a></td>
+        <td class="prompt-cell"><span class="noprompt">one-shot · prompt not archived</span></td>
+        <td class="notes-cell">Run b</td>
+      </tr>
+      <tr>
+        <th scope="row">
+          <a class="game-link" href="https://piebru.github.io/Grandpa-Piero-Games/games/260620c%20-%204-Way%20Traffic%20Intersection%20Simulator.html" target="_blank" rel="noopener">4-Way Traffic Intersection Simulator DEMO <span class="arrow" aria-hidden="true">→</span></a>
+          <span class="meta">260620c · <code>260620c - 4-Way Traffic Intersection Simulator.html</code></span>
+        </th>
+        <td class="shot-cell"><a href="https://piebru.github.io/Grandpa-Piero-Games/games/260620c%20-%204-Way%20Traffic%20Intersection%20Simulator.html" target="_blank" rel="noopener" tabindex="-1" aria-label="Play 4-Way Traffic Intersection Simulator DEMO"><img src="/assets/games/260620c-4-Way_Traffic_Intersection_Simulator.jpg" alt="Screenshot of 4-Way Traffic Intersection Simulator DEMO" width="160" height="100" loading="lazy"></a></td>
+        <td class="prompt-cell"><span class="noprompt">one-shot · prompt not archived</span></td>
+        <td class="notes-cell">Run c</td>
+      </tr>
+      <tr>
+        <th scope="row">
+          <a class="game-link" href="https://piebru.github.io/Grandpa-Piero-Games/games/260621%20-%204-Way%20Traffic%20Intersection%20Simulator.html" target="_blank" rel="noopener">4-Way Intersection Simulator DEMO <span class="arrow" aria-hidden="true">→</span></a>
+          <span class="meta">260621 · <code>260621 - 4-Way Traffic Intersection Simulator.html</code></span>
+        </th>
+        <td class="shot-cell"><a href="https://piebru.github.io/Grandpa-Piero-Games/games/260621%20-%204-Way%20Traffic%20Intersection%20Simulator.html" target="_blank" rel="noopener" tabindex="-1" aria-label="Play 4-Way Intersection Simulator DEMO"><img src="/assets/games/260621-4-Way_Traffic_Intersection_Simulator.jpg" alt="Screenshot of 4-Way Intersection Simulator DEMO" width="160" height="100" loading="lazy"></a></td>
+        <td class="prompt-cell"><span class="noprompt">one-shot · prompt not archived</span></td>
+        <td class="notes-cell">Next-day take</td>
+      </tr>
+      <tr>
+        <th scope="row">
+          <a class="game-link" href="https://piebru.github.io/Grandpa-Piero-Games/games/260713%20-%20Endless_flight_simulator.html" target="_blank" rel="noopener">Serene Flight DEMO <span class="arrow" aria-hidden="true">→</span></a>
+          <span class="meta">260713 · <code>260713 - Endless_flight_simulator.html</code></span>
+        </th>
+        <td class="shot-cell"><a href="https://piebru.github.io/Grandpa-Piero-Games/games/260713%20-%20Endless_flight_simulator.html" target="_blank" rel="noopener" tabindex="-1" aria-label="Play Serene Flight DEMO"><img src="/assets/games/260713-Endless_flight_simulator.jpg" alt="Screenshot of Serene Flight DEMO" width="160" height="100" loading="lazy"></a></td>
+        <td class="prompt-cell"><span class="noprompt">one-shot · prompt not archived</span></td>
+        <td class="notes-cell">Endless flight simulator</td>
+      </tr>
+      <tr>
+        <th scope="row">
+          <a class="game-link" href="https://piebru.github.io/Grandpa-Piero-Games/games/261003%20-%20Rooftop%20Runner.html" target="_blank" rel="noopener">Rooftop Runner DEMO <span class="arrow" aria-hidden="true">→</span></a>
+          <span class="meta">261003 · <code>261003 - Rooftop Runner.html</code></span>
+        </th>
+        <td class="shot-cell"><a href="https://piebru.github.io/Grandpa-Piero-Games/games/261003%20-%20Rooftop%20Runner.html" target="_blank" rel="noopener" tabindex="-1" aria-label="Play Rooftop Runner DEMO"><img src="/assets/games/261003-Rooftop_Runner.jpg" alt="Screenshot of Rooftop Runner DEMO" width="160" height="100" loading="lazy"></a></td>
+        <td class="prompt-cell"><span class="noprompt">one-shot · prompt not archived</span></td>
+        <td class="notes-cell">Endless runner across rooftops</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="footnote">These are the early takes, kept for the history of each game. Current versions
+  live on the main <a href="/games/">games page</a>.</p>
+</main>
+
+<footer class="wrap">
+  <a href="https://github.com/PieBru/Grandpa-Piero-Games">github.com/PieBru/Grandpa-Piero-Games</a>
+  · <a href="/games/">all games</a> · no cookies, no tracking
+</footer>
+
+</body>
+</html>
